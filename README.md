@@ -1,11 +1,13 @@
 # CSCI 3412 Homework 4
 ## Question 1:
 ### a.
+
+**Data Structure**  
 We will be using the min-heap data structure to merge it k sorted list. Each value will be stored as a tuple (value, sublist[ID], next value in sublist). 
 
 **Algorithm**
-1. We pull the first (smallest) value from each sublist and put in the heap. Then call the min_heapify() operation to maintain the min-heap property This operation is log(k) because there are k values in the min-heap.
-2. Pop the root (min) value from the min-heap and it to the merged list. Then add the next element from same list of previously popped elemented to the min-heap.
+1. Pop the first (smallest) value from each sublist and put in the heap. Then call the min_heapify() operation to maintain the min-heap property This operation is log(k) because there are k values in the min-heap.
+2. Pop the root (min) value from the min-heap and add it to the merged list. Then add the next element from same list of previously popped elemented to the min-heap.
 3. Repeat step 2 until the k lists are merged.
 
 **Time Complexity**  

@@ -1,5 +1,11 @@
 import random
 
+'''
+
+Sorting Algorithms
+
+'''
+
 def countingSort(arr, digit):
     length = len(arr)
     output = [0 for i in range(length)]
@@ -24,8 +30,6 @@ def countingSort(arr, digit):
     for i in range(0, length):
         arr[i] = output[i]
 
-    # return output
-
 def radixSort(arr):
     maxValue = max(arr)
 
@@ -35,7 +39,7 @@ def radixSort(arr):
         digit *= 10
 
 def insertionSort(A):
-    count = 0
+    # count = 0
     for j in range(1, len(A)):
         key = A[j]
         i = j-1
@@ -44,8 +48,37 @@ def insertionSort(A):
             i -=1
             count +=1
         A[i+1] = key
-    print(f"Number of comparisons: {count}")
-    return count
+    # print(f"Number of comparisons: {count}")
+    # return count
+
+def bucketSort(array):
+    # create empty buckets
+    buckets = []
+    numBuckets = 100
+    length = len(array)
+    for i in range(numBuckets):
+        buckets.append([])
+
+    # insert elements into respective buckets
+    for j in array:
+        ID = j//length
+        buckets[ID].append(j)
+    
+    # sort buckets with insertion sort
+    for n in buckets:
+        insertionSort(n)
+
+def isSorted(arr): # check if array is sorted in ascending order
+    for i in range(1, len(arr)):
+        if arr[i-1] > arr[i]:
+            return False
+    return True
+
+'''
+
+Min-Heap Algorithms
+
+'''
 
 def minHeapify(array, i):
     left = 2 * i + 1
@@ -53,19 +86,25 @@ def minHeapify(array, i):
     length = len(array) - 1  # for termination condition \
     smallest = i
 
-    if left <= length and array[i] > array[left]:
+    if left <= length and array[i][0] > array[left][0]:
         smallest = left
         
-    if right <= length and array[smallest] > array[right]:
+    if right <= length and array[smallest][0] > array[right][0]:
         smallest = right
 
     if smallest != i:
-        array[i], array[smallest] = array[smallest], array[i]
+        array[i][0], array[smallest][0] = array[smallest][0], array[i][0]
         minHeapify(array, smallest)   # largest == new i
 
 def buildMinHeap(array):
     for i in reversed(range(len(array)//2)):
         minHeapify(array, i)
+
+
+'''
+Merge K Sorted Lists
+
+'''
 
 def mergeKSortedLists(kSortedLists): # takes in a list of k sorted lists as parameter
     mergedList = []
@@ -85,11 +124,6 @@ def mergeKSortedLists(kSortedLists): # takes in a list of k sorted lists as para
 
     return mergedList
 
-def isSorted(arr): # check if array is sorted in ascending order
-    for i in range(1, len(arr)):
-        if arr[i-1] > arr[i]:
-            return False
-    return True
 
 def main():
 

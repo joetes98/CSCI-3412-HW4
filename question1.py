@@ -20,10 +20,11 @@ def countingSort(arr, digit):
         output[C[pos % 10] - 1] = i
         C[pos % 10] -= 1
 
+    # reorganize the initial array based on the output
     for i in range(0, length):
         arr[i] = output[i]
 
-    return output
+    # return output
 
 def radixSort(arr):
     maxValue = max(arr)
@@ -46,6 +47,43 @@ def insertionSort(A):
     print(f"Number of comparisons: {count}")
     return count
 
+def minHeapify(array, i):
+    left = 2 * i + 1
+    right = 2 * i + 2
+    length = len(array) - 1  # for termination condition \
+    smallest = i
+
+    if left <= length and array[i] > array[left]:
+        smallest = left
+        
+    if right <= length and array[smallest] > array[right]:
+        smallest = right
+
+    if smallest != i:
+        array[i], array[smallest] = array[smallest], array[i]
+        minHeapify(array, smallest)   # largest == new i
+
+def buildMinHeap(array):
+    for i in reversed(range(len(array)//2)):
+        minHeapify(array, i)
+
+def mergeKSortedLists(kSortedLists): # takes in a list of k sorted lists as parameter
+    mergedList = []
+    minHeap = []
+
+    for i in kSortedLists: # pull the min value from each list and append to min heap
+        minValue = i.pop(0) 
+        minHeap.append((minValue, i, 0))
+    buildMinHeap(minHeap) # need to change minHeapify function to use tuples
+
+    while len(mergedList) > 0: # take min value from the min heap and add to the merged list
+        minValue = minHeap.pop(1) 
+        mergedList.append(minValue[0])
+        nextValue = kSortedLists[minValue[1]][minValue[2]] # finds the next value to add to the min heap based on the list number and position
+        minHeap.append((nextValue, minValue[1], minValue[2]+1))
+        buildMinHeap(minHeap)
+
+    return mergedList
 
 def isSorted(arr): # check if array is sorted in ascending order
     for i in range(1, len(arr)):

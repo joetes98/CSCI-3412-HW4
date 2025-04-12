@@ -9,9 +9,20 @@ We will be using the min-heap data structure to merge it k sorted list. Each val
 1. Pop the first (smallest) value from each sublist and put in the heap. Then call the min_heapify() operation to maintain the min-heap property This operation is $log_{2}(k)$ because there are k values in the min-heap.
 2. Pop the root (min) value from the min-heap and add it to the merged list. Then add the next element from same list of previously popped elemented to the min-heap.
 3. Repeat step 2 until the k lists are merged.
+  
 
 **Time Complexity**  
-Each time we pop the minimum element from the heap, we call the min_heapify() function which restores the min-heap property. This operation takes $log_{2}(k)$ time due to the height of the binary tree being $log_{2}(k)$. There are n elements, thus the total time complexity to merge the k sorted list is $nlog_{2}(k)$.
+Each time we pop the minimum element from the heap, we call the min_heapify() function which restores the min-heap property. This operation takes $log_{2}(k)$ time due to the height of the binary tree being $log_{2}(k)$. There are n elements, thus the total time complexity to merge the k sorted list is $nlog_{2}(k)$.  
+  
+**Reflections on nk vs nlogk**  
+
+**nlog(k) total time:** 0.3314087390899658 seconds  
+**nk total time:** 4.978586435317993 seconds
+  
+The results show that the nlogk algorithm performs much faster than the nk algorithm. While the nk algorithm is not "slow" as it took under 5 seconds, the time could increase by a large amount if the number of sublists were increased.
+  
+When I originally implemented the nlogk algorithm, I had written my own functions for minHeapify() and buildMinHeap(). With these functions, I found that my nlogk algorithm was actually performing slower than the nk algorithm. After some testing, I found that this was due to the fact that I was rebuilding the entire heap with buildMinHeap() after every insertion/deletion. Because of this, the operations were much closer to O(k) rather than O(logk). Instead, I used the heapq library that is included with python. Heapq has two methods, $heappush()$ and $heappop()$ which add/remove elements from the min heap while maintaining the heap property. This library helped achieve the desired results.
+
 
 ## Question 2: Skip List Search vs Binary Search: Summary & Observations  
 ###
